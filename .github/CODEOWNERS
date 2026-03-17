@@ -1,0 +1,17 @@
+# These owners will be the default owners for everything in
+# the repo. Unless a later match takes precedence,
+# they will be requested for review when someone opens a pull request.
+*       @Tony
+
+# CI/CD Workflows
+.github/workflows/    @Tony
+
+# Documentation
+/docs/      @Tony
+
+# Backend code
+/lib/       @Tony
+/test/      @Tony
+
+# Frontend assets
+/assets/    @Tony
