@@ -2,7 +2,9 @@ defmodule TaskManagerGuiWeb.ErrorJSONTest do
   use TaskManagerGuiWeb.ConnCase, async: true
 
   test "renders 404" do
-    assert TaskManagerGuiWeb.ErrorJSON.render("404.json", %{}) == %{errors: %{detail: "Not Found"}}
+    assert TaskManagerGuiWeb.ErrorJSON.render("404.json", %{}) == %{
+             errors: %{detail: "Not Found"}
+           }
   end
 
   test "renders 500" do

@@ -13,7 +13,7 @@ defmodule TaskManagerGui.FileWatcher do
     {:ok, %{watcher_pid: watcher_pid, path: path}}
   end
 
-  def handle_info({_pid, {:fs, :file_event}, {path, _events}}, state) do
+  def handle_info({_pid, {:fs, :file_event}, {_path, _events}}, state) do
     # Cuando detectamos un cambio, notificamos a través de PubSub
     # Como es una app local simple, podemos enviar un mensaje global
     # o filtrar por proyecto si analizamos el path.

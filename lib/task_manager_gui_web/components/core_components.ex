@@ -32,6 +32,70 @@ defmodule TaskManagerGuiWeb.CoreComponents do
   alias Phoenix.LiveView.JS
 
   @doc """
+  Renders a modal.
+
+  ## Examples
+
+      <.modal id="confirm-modal">
+        This is a modal.
+      </.modal>
+
+  JS commands may be passed to the `:on_cancel` to configure
+  the closing behavior. The default closing behavior is to
+  push the "lv:clear-flash" event if there is a flash message.
+
+  ## Examples
+
+      <.modal id="confirm-modal" on_cancel={JS.push("delete")}>
+        Are you sure?
+      </.modal>
+  """
+  attr :id, :string, required: true
+  attr :show, :boolean, default: false
+  attr :on_cancel, JS, default: %JS{}
+  slot :inner_block, required: true
+
+  def modal(assigns) do
+    ~H"""
+    <dialog
+      id={@id}
+      class="modal"
+      phx-mounted={@show && show_modal(@id)}
+      phx-remove={hide_modal(@id)}
+      phx-cancel={@on_cancel}
+      {@id == "task-modal" && [open: true]}
+    >
+      <div class="modal-box max-w-3xl">
+        <form method="dialog">
+          <button
+            class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            phx-click={@on_cancel}
+          >
+            ✕
+          </button>
+        </form>
+        {render_slot(@inner_block)}
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button phx-click={@on_cancel}>close</button>
+      </form>
+    </dialog>
+    """
+  end
+
+  def show_modal(js \\ %JS{}, id) when is_binary(id) do
+    js
+    |> JS.show(to: "##{id}")
+    |> JS.add_class("modal-open", to: "##{id}")
+  end
+
+  def hide_modal(js \\ %JS{}, id) when is_binary(id) do
+    js
+    |> JS.hide(to: "##{id}")
+    |> JS.remove_class("modal-open", to: "##{id}")
+  end
+
+  @doc """
   Renders flash notices.
 
   ## Examples

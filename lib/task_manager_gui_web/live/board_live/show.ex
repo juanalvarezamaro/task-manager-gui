@@ -28,17 +28,17 @@ defmodule TaskManagerGuiWeb.BoardLive.Show do
     ~H"""
     <div class="px-4 py-8 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between mb-8">
-        <h1 class="text-2xl font-bold text-gray-900">Proyecto: <%= @project_id %></h1>
+        <h1 class="text-2xl font-bold text-gray-900">Proyecto: {@project_id}</h1>
         <.link navigate={~p"/"} class="text-sm font-semibold leading-6 text-gray-900">
           &larr; Volver a proyectos
-        </link>
+        </.link>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-7 gap-4 overflow-x-auto pb-4">
         <%= for col <- FileService.columns() do %>
           <div class="bg-gray-100 p-4 rounded-lg flex-shrink-0 min-w-[250px]">
             <h2 class="font-bold text-gray-700 mb-4 uppercase text-xs tracking-wider font-mono">
-              <%= String.replace(col, "-", " ") %> (<%= length(Map.get(@board, col, [])) %>)
+              {String.replace(col, "-", " ")} ({length(Map.get(@board, col, []))})
             </h2>
 
             <div
@@ -57,7 +57,7 @@ defmodule TaskManagerGuiWeb.BoardLive.Show do
                   phx-value-col={col}
                 >
                   <div class="text-sm font-medium text-gray-900 truncate pr-2">
-                    <%= String.trim_trailing(task, ".md") %>
+                    {String.trim_trailing(task, ".md")}
                   </div>
                   <div class="mt-1 text-xs text-gray-500">
                     <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
@@ -78,9 +78,9 @@ defmodule TaskManagerGuiWeb.BoardLive.Show do
         on_cancel={JS.push("close_modal")}
       >
         <div class="space-y-4">
-          <h3 class="text-xl font-bold"><%= @selected_task.filename %></h3>
+          <h3 class="text-xl font-bold">{@selected_task.filename}</h3>
           <div class="prose prose-sm max-w-none border-t pt-4">
-            <pre class="bg-gray-50 p-4 rounded text-xs overflow-auto max-h-[60vh]"><%= @selected_task.content %></pre>
+            <pre class="bg-gray-50 p-4 rounded text-xs overflow-auto max-h-[60vh] font-mono whitespace-pre-wrap"><%= @selected_task.content %></pre>
           </div>
         </div>
       </.modal>

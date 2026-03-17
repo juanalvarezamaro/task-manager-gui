@@ -30,6 +30,7 @@ defmodule TaskManagerGui.FileService do
 
     Enum.into(@columns, %{}, fn col ->
       col_path = Path.join(project_path, col)
+
       tasks =
         if File.dir?(col_path) do
           col_path
@@ -39,6 +40,7 @@ defmodule TaskManagerGui.FileService do
         else
           []
         end
+
       {col, tasks}
     end)
   end
